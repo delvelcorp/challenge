@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Microservicios.iml" filepath="$PROJECT_DIR$/.idea/Microservicios.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bankservices/endpoint/account/account.iml" filepath="$PROJECT_DIR$/bankservices/endpoint/account/account.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bankservices/bankservices.iml" filepath="$PROJECT_DIR$/bankservices/bankservices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bankservices/endpoint/customer/customer.iml" filepath="$PROJECT_DIR$/bankservices/endpoint/customer/customer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bankservices/endpoint/endpoint.iml" filepath="$PROJECT_DIR$/bankservices/endpoint/endpoint.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bankservices/infrastructure/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/bankservices/infrastructure/eureka-server/eureka-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bankservices/infrastructure/infrastructure.iml" filepath="$PROJECT_DIR$/bankservices/infrastructure/infrastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bankservices/endpoint/transaction/transaction.iml" filepath="$PROJECT_DIR$/bankservices/endpoint/transaction/transaction.iml" />
+    </modules>
+  </component>
+</project>

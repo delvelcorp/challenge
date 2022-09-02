@@ -24,7 +24,7 @@ services:
 
   eureka_container:
     container_name: discovery-eureka
-    image: quisange/challenge:eureka-server
+    image: delvelcorp/challenge:eureka-server
     ports:
       - 9000:9000
     environment:
@@ -37,17 +37,17 @@ services:
  ##########################################################################
   config_container:
     container_name: config_container
-    image: quisange/challenge:config-server
+    image: delvelcorp/challenge:config-server
     volumes:
       #this it use because we are using a local github repository /host/path:/container/path use ./ for relative path
       - ./config-server-repo:/tmp/config-server-repo
       #All projets will have a variable value  DEUREKA_SERVER this tell where find a discovery-eureka server
     environment:
       - JAVA_OPTS=
-        -Xms256M
-        -Xmx256M
+        -Xms512M
+        -Xmx1024M
         -DEUREKA_SERVER=http://discovery-eureka:9000/eureka
-        -DREMOTE_REPOSITORY=https://github.com/quisange/challenge.git
+        -DREMOTE_REPOSITORY=https://github.com/delvelcorp/challenge.git
         -DREPOSITORY_DIR=database-config
         -DREPOSITORY_BRANCH=main
         -DCONFIG_SERVER_USER=develcorp
@@ -65,7 +65,7 @@ services:
   ##########################################################################
   customer_container:
     container_name: customer_container
-    image: quisange/challenge:customer
+    image: delvelcorp/challenge:customer
     environment:
       - JAVA_OPTS=
         -Xms256M
@@ -84,7 +84,7 @@ services:
   ##########################################################################
   account_container:
     container_name: account_container
-    image: quisange/challenge:account
+    image: delvelcorp/challenge:account
     environment:
       - JAVA_OPTS=
         -Xms256M
@@ -102,7 +102,7 @@ services:
   ##########################################################################
   transaction_container:
     container_name: transaction_container
-    image: quisange/challenge:transaction
+    image: delvelcorp/challenge:transaction
     environment:
       - JAVA_OPTS=
         -Xms256M
@@ -120,8 +120,3 @@ volumes:
     db_vol:
         external:
             name: "postgres_db"
-
-networks:
-    default:
-        external:
-            name: bankservices_default

@@ -37,5 +37,5 @@ public class Transaction {
 
     private String message;
 
-    private Long accountNumber;
+    private Long accountId;
 }

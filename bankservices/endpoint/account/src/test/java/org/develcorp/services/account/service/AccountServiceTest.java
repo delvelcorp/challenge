@@ -3,7 +3,6 @@ package org.develcorp.services.account.service;
 import org.develcorp.services.account.error.ExceptionError;
 import org.develcorp.services.account.mapper.AccountMapper;
 import org.develcorp.services.account.mockData.AccountMock;
-import org.develcorp.services.account.model.entity.Account;
 import org.develcorp.services.account.repository.AccountRepository;
 import org.develcorp.services.account.services.impl.AccountServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -34,10 +33,10 @@ public class AccountServiceTest {
 
     @Test
     void whenFindAllThenGetAccountList(){
-        Mockito.when(accountRepository.findAll()).thenReturn((List<Account>) AccountMock.getAccount());
+        Mockito.when(accountRepository.findAll()).thenReturn(List.of(AccountMock.getAccount()));
         Mockito.when(accountMapper.AccountToAccountDto(Mockito.any())).thenReturn(AccountMock.getAccountDto());
 
-        Assertions.assertNotNull(accountService.listAllAccounts());
+        Assertions.assertNotNull(accountService.getAllAccounts());
     }
 
     @Test
@@ -45,7 +44,7 @@ public class AccountServiceTest {
         Mockito.when(accountRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(AccountMock.getAccount()));
         Mockito.when(accountMapper.AccountToAccountDto(Mockito.any())).thenReturn(AccountMock.getAccountDto());
 
-        Assertions.assertNotNull(accountService.byAccountNumber(id));
+        Assertions.assertNotNull(accountService.getByAccountId(id));
     }
 
     @Test

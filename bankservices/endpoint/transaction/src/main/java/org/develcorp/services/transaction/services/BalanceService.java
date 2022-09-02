@@ -4,11 +4,10 @@ import org.develcorp.services.transaction.model.dto.BalanceDto;
 
 public interface BalanceService {
 
-    BalanceDto findById(Long id);
+    BalanceDto getById(Long id);
 
     BalanceDto saveBalance(BalanceDto balanceDto);
 
     BalanceDto updateBalance(BalanceDto balanceDto);
-
-    BalanceDto findByAccountNumber(Long accountNumber);
+    BalanceDto findByAccountId(Long accountId);
 }

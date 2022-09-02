@@ -62,9 +62,9 @@ Despues de unos 20 segundos del despliegue podemos ver que servicios se han leva
 **docker ps**
 ```
 CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS          PORTS                    NAMES
-b543989bd244   quisange/challenge:config-server   "sh -c 'java $JAVA_O‚Ä¶"   40 hours ago     Up 12 minutes   0.0.0.0:9002->9002/tcp   config_container
-3e8d779d15a3   quisange/challenge:eureka-server   "sh -c 'java $JAVA_O‚Ä¶"   41 hours ago     Up 12 minutes   0.0.0.0:9000->9000/tcp   discovery-eureka
-265cdaa7a9a2   postgres:latest                    "docker-entrypoint.s‚Ä¶"   41 hours ago     Up 12 minutes   0.0.0.0:3432->5432/tcp   postgres_container
+b543989bd244   delvelcorp/challenge:config-server   "sh -c 'java $JAVA_O‚Ä?   40 hours ago     Up 12 minutes   0.0.0.0:9002->9002/tcp   config_container
+3e8d779d15a3   delvelcorp/challenge:eureka-server   "sh -c 'java $JAVA_O‚Ä?   41 hours ago     Up 12 minutes   0.0.0.0:9000->9000/tcp   discovery-eureka
+265cdaa7a9a2   postgres:latest                    "docker-entrypoint.s‚Ä?   41 hours ago     Up 12 minutes   0.0.0.0:3432->5432/tcp   postgres_container
 ```
 
 _Como se puede observar faltan los servicios correspondientes a los endpoint, para visualizar que ocurri√≥, utilizamos el log de docker
@@ -80,12 +80,12 @@ Connection refused (Connection refused); nested exception is java.net.ConnectExc
 **docker-compose start**
 ```
 CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS          PORTS                    NAMES
-2e31678406b8   quisange/challenge:account         "sh -c 'java $JAVA_O‚Ä¶"   12 minutes ago   Up 8 minutes    0.0.0.0:8082->8082/tcp   account_container
-e54814f84fb0   quisange/challenge:customer        "sh -c 'java $JAVA_O‚Ä¶"   12 minutes ago   Up 8 minutes    0.0.0.0:8081->8081/tcp   customer_container
-364d94591508   quisange/challenge:transaction     "sh -c 'java $JAVA_O‚Ä¶"   12 minutes ago   Up 8 minutes    0.0.0.0:8083->8083/tcp   transaction_container
-b543989bd244   quisange/challenge:config-server   "sh -c 'java $JAVA_O‚Ä¶"   40 hours ago     Up 12 minutes   0.0.0.0:9002->9002/tcp   config_container
-3e8d779d15a3   quisange/challenge:eureka-server   "sh -c 'java $JAVA_O‚Ä¶"   41 hours ago     Up 12 minutes   0.0.0.0:9000->9000/tcp   discovery-eureka
-265cdaa7a9a2   postgres:latest                    "docker-entrypoint.s‚Ä¶"   41 hours ago     Up 12 minutes   0.0.0.0:3432->5432/tcp   postgres_container
+2e31678406b8   delvelcorp/challenge:account         "sh -c 'java $JAVA_O‚Ä?   12 minutes ago   Up 8 minutes    0.0.0.0:8082->8082/tcp   account_container
+e54814f84fb0   delvelcorp/challenge:customer        "sh -c 'java $JAVA_O‚Ä?   12 minutes ago   Up 8 minutes    0.0.0.0:8081->8081/tcp   customer_container
+364d94591508   delvelcorp/challenge:transaction     "sh -c 'java $JAVA_O‚Ä?   12 minutes ago   Up 8 minutes    0.0.0.0:8083->8083/tcp   transaction_container
+b543989bd244   delvelcorp/challenge:config-server   "sh -c 'java $JAVA_O‚Ä?   40 hours ago     Up 12 minutes   0.0.0.0:9002->9002/tcp   config_container
+3e8d779d15a3   delvelcorp/challenge:eureka-server   "sh -c 'java $JAVA_O‚Ä?   41 hours ago     Up 12 minutes   0.0.0.0:9000->9000/tcp   discovery-eureka
+265cdaa7a9a2   postgres:latest                    "docker-entrypoint.s‚Ä?   41 hours ago     Up 12 minutes   0.0.0.0:3432->5432/tcp   postgres_container
 ```
 
 - Como se puede observar tenemos todos los servicios levantados y corriendo
@@ -191,22 +191,103 @@ localhost:8082/accounts
 Movimientos creados
 
 localhost:8083/transactions
-
+[
+    {
+        "id": 7,
+        "date": "2022-09-02",
+        "transactionType": "WITHDRAWAL",
+        "value": 575.00,
+        "balance": 1425.00,
+        "status": true,
+        "message": "Remove of 575",
+        "accountId": 478758
+    },
+    {
+        "id": 9,
+        "date": "2022-09-02",
+        "transactionType": "DEPOSIT",
+        "value": 600.00,
+        "balance": 700.00,
+        "status": true,
+        "message": "Deposit of  600",
+        "accountId": 225487
+    },
+    {
+        "id": 10,
+        "date": "2022-09-02",
+        "transactionType": "DEPOSIT",
+        "value": 150.00,
+        "balance": 160.00,
+        "status": true,
+        "message": "Deposit of 150",
+        "accountId": 495878
+    },
+    {
+        "id": 11,
+        "date": "2022-09-02",
+        "transactionType": "WITHDRAWAL",
+        "value": 540.00,
+        "balance": 0.00,
+        "status": true,
+        "message": "Remove of 540",
+        "accountId": 496825
+    }
+]
 ```
 
 ```
-Reporte
+Reporte por cuenta
 
-localhost:8083/transactions
-
+localhost:8083/transactions/report?cliente=478758&desde=2022-09-02&hasta=2022-09-02
+[
+    {
+        "id": 7,
+        "date": "2022-09-02",
+        "transactionType": "WITHDRAWAL",
+        "value": 575.00,
+        "balance": 1425.00,
+        "status": true,
+        "message": "Remove of 575",
+        "accountId": 478758
+    }
+]
 ```
 
+```
+Reporte por cliente
+
+localhost:8082/accounts/report?customer=2&from=2022-09-02&to=2022-09-02
+[
+    {
+        "date": "2022-09-02T00:00:00.000+00:00",
+        "account": "Marianela Montalvo ",
+        "customer": null,
+        "accountNumber": 225487,
+        "accountType": "CURRENT",
+        "initialBalance": 100.00,
+        "status": true,
+        "transactionValue": 600.0,
+        "transactionBalance": 700.0
+    },
+    {
+        "date": "2022-09-02T00:00:00.000+00:00",
+        "account": "Marianela Montalvo ",
+        "customer": null,
+        "accountNumber": 496825,
+        "accountType": "SAVINGS",
+        "initialBalance": 540.00,
+        "status": true,
+        "transactionValue": -540.0,
+        "transactionBalance": 0.0
+    }
+]
+```
 
 ## Versionado üìå
 * [Git](https://git-scm.com/). 
 
 
-## Construcci√≥n üõ†Ô∏è
+## Construcci√≥n üõ†Ô∏?
 
 * [Spring](https://spring.io/)
 * [Maven](https://maven.apache.org/)

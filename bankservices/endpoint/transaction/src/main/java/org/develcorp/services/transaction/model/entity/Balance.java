@@ -14,20 +14,10 @@ public class Balance {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String customer;
+    private Long accountId;
+
+    private BigDecimal actualBalance;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
-
-    private Long accountNumber;
-
-    private String accountType;
-
-    private BigDecimal initialBalance;
-
-    private boolean status;
-
-    private BigDecimal value;
-
-    private BigDecimal balance;
+    private Date modifiedAt;
 }

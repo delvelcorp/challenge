@@ -21,7 +21,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     @Transactional(readOnly = true)
-    public BalanceDto findById(Long id) {
+    public BalanceDto getById(Long id) {
         return balanceMapper.BalanceToBalanceDto(balanceRepository.findById(id).orElse(null));
     }
 
@@ -30,7 +30,7 @@ public class BalanceServiceImpl implements BalanceService {
     public BalanceDto saveBalance(BalanceDto balanceDto) {
         Balance balance = balanceMapper.BalanceDtoToBalance(balanceDto);
 
-        if (balanceRepository.findById(balance.getId()).isPresent()) {
+        if (balanceRepository.findById(balance.getId()) != null) {
             throw BalanceError.E002;
         } else {
             return balanceMapper.BalanceToBalanceDto(balanceRepository.save(balance));
@@ -44,13 +44,9 @@ public class BalanceServiceImpl implements BalanceService {
         balance = balanceRepository.findById(balance.getId()).orElse(null);
 
         if (balance != null) {
-            balance.setDate(balanceDto.getDate());
-            balance.setAccountNumber(balanceDto.getAccountNumber());
-            balance.setAccountType(balanceDto.getAccountType());
-            balance.setInitialBalance(balanceDto.getInitialBalance());
-            balance.setStatus(balanceDto.isStatus());
-            balance.setValue(balanceDto.getValue());
-            balance.setBalance(balanceDto.getBalance());
+            balance.setAccountId(balanceDto.getAccountId());
+            balance.setActualBalance(balanceDto.getActualBalance());
+            balance.setModifiedAt(balanceDto.getModifiedAt());
 
             return balanceMapper.BalanceToBalanceDto(balanceRepository.save(balance));
         } else {
@@ -60,7 +56,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     @Transactional(readOnly = true)
-    public BalanceDto findByAccountNumber(Long accountNumber) {
-        return balanceMapper.BalanceToBalanceDto(balanceRepository.findByAccountNumber(accountNumber));
+    public BalanceDto findByAccountId(Long accountId) {
+        return balanceMapper.BalanceToBalanceDto(balanceRepository.findByAccountId(accountId));
     }
 }

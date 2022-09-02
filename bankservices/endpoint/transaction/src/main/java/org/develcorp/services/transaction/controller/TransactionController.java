@@ -26,11 +26,12 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @GetMapping (value = "/{id}")
-    public ResponseEntity<?> getByTransactionId(@PathVariable("id") Long id) {
-        log.info("findByTransactionId --> GET: /api/transactions/?id");
 
-        TransactionDto transactionDto = transactionService.byTransactionId(id);
+    @GetMapping (value = "/{id}")
+    public ResponseEntity<?> getTransaction(@RequestParam(name = "id") Long id){
+        log.info("TransactionById --> GET: /api/transactions/?id");
+
+        TransactionDto transactionDto = transactionService.getTransaction(id);
         if (transactionDto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message("C001", "Transaction with id " + id + " not found").toString());
         } else {
@@ -39,14 +40,14 @@ public class TransactionController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listAllTransactions(Long accountNumber){
-        log.info("listAllTransactions --> GET: /api/transactions");
+    public ResponseEntity<?> listTransactions(Long accountId){
+        log.info("getAllTransaction --> GET: /api/transactions");
 
         List<TransactionDto> transactionDtoList;
-        if (null == accountNumber){
+        if (null == accountId){
             transactionDtoList = transactionService.listAllTransactions();
         }else {
-            transactionDtoList = transactionService.findByAccountNumber(accountNumber);
+            transactionDtoList = transactionService.findByAccountId(accountId);
         }
         if (transactionDtoList.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message("C002", "Empty data.").toString());
@@ -56,9 +57,9 @@ public class TransactionController {
     }
 
     @GetMapping(value = "/report")
-    public ResponseEntity<?> getReport(@RequestParam(name = "cliente") Long accountNumber,
-                                       @RequestParam(name = "desde") String fromDate,
-                                       @RequestParam(name = "hasta") String toDate){
+    public ResponseEntity<?> reportList(@RequestParam(name = "cliente") Long accountId,
+                                                        @RequestParam(name = "desde") String fromDate,
+                                                        @RequestParam(name = "hasta") String toDate){
         List<TransactionDto> transactionDtoList;
 
         Date from;
@@ -71,7 +72,7 @@ public class TransactionController {
             throw new UnsupportedOperationException(e);
         }
 
-        transactionDtoList = transactionService.findByAccountNumberAndDateBetween(accountNumber, from, to);
+        transactionDtoList = transactionService.findByAccountIdAndDateBetween(accountId, from, to);
 
         if(transactionDtoList == null || transactionDtoList.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message("C001", "Transactions not found").toString());
@@ -81,10 +82,10 @@ public class TransactionController {
     }
 
     @GetMapping (path = "/account")
-    public ResponseEntity<?> getLastTransactionByAccount(@RequestParam(name = "accountNumber") Long accoutId){
-        log.info("getLastTransactionByAccount --> GET: /api/transactions/?accountNumber");
+    public ResponseEntity<?> getLastTransactionByAccount(@RequestParam(name = "accountId") Long accoutId){
+        log.info("TransactionById --> GET: /api/transactions/?accountId");
 
-        TransactionDto transactionDto = transactionService.findByAccountNumberLast(accoutId);
+        TransactionDto transactionDto = transactionService.findByAccountIdLast(accoutId);
         if (transactionDto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message("C001", "Transaction with id " + accoutId + " not found").toString());
         } else {
@@ -93,15 +94,18 @@ public class TransactionController {
     }
 
     @PostMapping(value = "/opening")
-    public ResponseEntity<?> postInitialTransaction(@Valid @RequestBody TransactionDto transactionDto, BindingResult bindingResult){
-        log.info("postInitialTransaction --> POST: /api/opening");
+    public ResponseEntity<?> openTransaction(@Valid @RequestBody TransactionDto transactionDto, BindingResult bindingResult){
+        log.info("openTransaction --> POST: /api/opening");
 
         if(bindingResult.hasErrors()){
+            System.out.println("Ingresa al error");
+            System.out.println(new BindingError().getMessage(bindingResult).toString());
             return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(new ExceptionError(HttpStatus.NOT_FOUND.value(), new Error("VC1", new BindingError().getMessage(bindingResult))).getError().toString());
         }
 
         try {
-            transactionDto = transactionService.postInitialTransaction(transactionDto);
+            System.out.println("Pasa al try");
+            transactionDto = transactionService.openTransaction(transactionDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(transactionDto);
         } catch (ExceptionError e) {
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(e.getError().toString());
@@ -142,7 +146,7 @@ public class TransactionController {
 
     @DeleteMapping("delete")
     public ResponseEntity<?> deleteTransaction(@RequestParam(name = "id") Long id) {
-        log.info("deleteTransaction --> DELETE: /api/transactions/delete");
+        log.info("Client delete Endpoint GET: /api/transactions/delete");
 
         try {
             transactionService.deleteTransaction(id);

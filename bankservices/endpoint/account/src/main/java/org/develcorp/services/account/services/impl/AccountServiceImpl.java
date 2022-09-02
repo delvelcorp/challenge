@@ -6,12 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
-import org.develcorp.services.account.external.dto.transaction.TransactionDto;
-import org.develcorp.services.account.external.dto.transaction.enums.TransactionType;
 import org.develcorp.services.account.mapper.AccountMapper;
 import org.develcorp.services.account.model.dto.AccountDto;
+import org.develcorp.services.account.model.dto.TransactionDto;
 import org.develcorp.services.account.model.entity.Account;
 import org.develcorp.services.account.model.dto.ReportDto;
+import org.develcorp.services.account.model.enums.TransactionType;
 import org.develcorp.services.account.model.error.AccountError;
 import org.develcorp.services.account.repository.AccountRepository;
 import org.develcorp.services.account.services.AccountService;
@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
                 connection.addHandlerLast(new WriteTimeoutHandler(5000, TimeUnit.MILLISECONDS));
             });
 
-    private <T> List<T> getTransactions(long accountNumber) {
+    private <T> List<T> getTransactions(long accountId) {
         List<T> transactions = new ArrayList<>();
 
         try {
@@ -67,8 +67,8 @@ public class AccountServiceImpl implements AccountService {
                     .defaultUriVariables(Collections.singletonMap("url", "http://endpoint-transaction"))
                     .build();
             List<Object> block = client.method(HttpMethod.GET).uri(uriBuilder -> uriBuilder
-                            .path("/movimientos")
-                            .queryParam("accountNumber", accountNumber)
+                            .path("/transactions")
+                            .queryParam("accountId", accountId)
                             .build())
                     .retrieve().bodyToFlux(Object.class).collectList().block();
             transactions = (List<T>) block;
@@ -78,7 +78,7 @@ public class AccountServiceImpl implements AccountService {
         return transactions;
     }
 
-    private <T> List<T> getTransactions(long accountNumber, String fromDate, String toDate) {
+    private <T> List<T> getTransactions(long accountId, String fromDate, String toDate) {
         List<T> transactions = new ArrayList<>();
 
         try {
@@ -88,8 +88,8 @@ public class AccountServiceImpl implements AccountService {
                     .defaultUriVariables(Collections.singletonMap("url", "http://endpoint-transaction"))
                     .build();
             List<Object> block = client.method(HttpMethod.GET).uri(uriBuilder -> uriBuilder
-                            .path("/movimientos/reporte")
-                            .queryParam("cliente", accountNumber)
+                            .path("/transactions/report")
+                            .queryParam("cliente", accountId)
                             .queryParam("desde", fromDate)
                             .queryParam("hasta", toDate)
                             .build())
@@ -100,14 +100,14 @@ public class AccountServiceImpl implements AccountService {
         }
         return transactions;
     }
-    private String getAccountIdentification(long accountNumber) {
+    private String getAccountIdentification(long accountId) {
         String identification = null;
             WebClient client = webClientBuilder.clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
-                    .baseUrl("http://endpoint-account")
+                    .baseUrl("http://endpoint-customer")
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .defaultUriVariables(Collections.singletonMap("url", "http://endpoint-account"))
+                    .defaultUriVariables(Collections.singletonMap("url", "http://endpoint-customer"))
                     .build();
-            JsonNode block = client.method(HttpMethod.GET).uri("/clientes/" + accountNumber)
+            JsonNode block = client.method(HttpMethod.GET).uri("/customers/" + accountId)
                     .retrieve().bodyToMono(JsonNode.class).block();
 
             if(block != null){
@@ -119,9 +119,10 @@ public class AccountServiceImpl implements AccountService {
 
     private void createFirstTransaction(Account account) {
         TransactionDto transactionDto = new TransactionDto();
-        transactionDto.setAccountNumber(account.getAccountNumber());
+        transactionDto.setAccountId(account.getAccountNumber());
         transactionDto.setTransactionType(TransactionType.OPENING);
         transactionDto.setValue(account.getInitialBalance());
+        transactionDto.setBalance(account.getInitialBalance());
         transactionDto.setDate(new Date());
 
         webClientBuilder.clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
@@ -132,7 +133,7 @@ public class AccountServiceImpl implements AccountService {
 
         webClientBuilder.build()
                 .post()
-                .uri("/movimientos/apertura")
+                .uri("/transactions/opening")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON )
                 .body(BodyInserters.fromValue(transactionDto))
@@ -142,7 +143,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AccountDto> listAllAccounts() {
+    public List<AccountDto> getAllAccounts() {
         List<Account> accounts = accountRepository.findAll();
         List<AccountDto> accountDtoList = new ArrayList<>();
 
@@ -156,7 +157,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional(readOnly = true)
-    public AccountDto byAccountNumber(Long id) {
+    public AccountDto getByAccountId(Long id) {
         return accountMapper.AccountToAccountDto(accountRepository.findById(id).orElse(null));
     }
 
@@ -211,7 +212,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<AccountDto> findByCustomer(Long customerId) {
         List<Account> accounts = accountRepository.findByCustomerId(customerId);
         List<AccountDto> accountDtoList = new ArrayList<>();
@@ -225,21 +225,21 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<ReportDto> getReport(Long accountNumber, String fromDate, String toDate) {
+    public List<ReportDto> getReport(Long accountId, String fromDate, String toDate) {
         List<ReportDto> reports = new ArrayList<>();
 
         ObjectMapper mapper = new ObjectMapper();
 
         ReportDto reportDto;
         String nameAccount;
-        List<Account> accounts = accountRepository.findByAccountNumber(accountNumber);
+        List<Account> accounts = accountRepository.findByCustomerId(accountId);
 
+        System.out.println("Cuenta a consultar" + accounts.size());
         if(accounts.isEmpty()){
             return null;
         }
 
-        nameAccount = getAccountIdentification(accountNumber);
+        nameAccount = getAccountIdentification(accountId);
 
         for (Account account : accounts) {
             List<TransactionDto> transactionDtoList = mapper.convertValue(getTransactions(account.getAccountNumber(), fromDate, toDate), new TypeReference<List<TransactionDto>>() {});
@@ -254,16 +254,18 @@ public class AccountServiceImpl implements AccountService {
                         reportDto.setStatus(account.isStatus());
                         reportDto.setDate(transactionDto.getDate());
                         reportDto.setInitialBalance(account.getInitialBalance());
-                        if(account.getAccountType().getCode().equals("R")){
+                        if(transactionDto.getTransactionType().getCode().equals("R")){
                             reportDto.setTransactionValue(transactionDto.getValue().multiply(new BigDecimal(-1)));
                         }else{
                         reportDto.setTransactionValue(transactionDto.getValue());
                         }
-                        reportDto.setTransactionBalance(transactionDto.getValue());
+                        reportDto.setTransactionBalance(transactionDto.getBalance());
 
                         reports.add(reportDto);
                     }
                 }
+
+                System.out.println("TAMANO LISTA " + reports.size());
             }
         }
         return reports;
