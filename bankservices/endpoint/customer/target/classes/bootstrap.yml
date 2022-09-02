@@ -1,0 +1,32 @@
+server:
+  port: 8081
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://localhost:9000/eureka}
+
+spring:
+  application:
+    name: endpoint-customer
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      fail-fast: true
+      name: customer
+      profile: endpoint
+      username: develcorp
+      password: develcorppass
+      retry:
+        max-attempts: 1
+        max-interval: 1000
+        
+customer:
+  customerError:
+    title: ${CUSTOMER_EXCEPTION_TITLE:Loan Error}
+    component: ${CUSTOMER_EXCEPTION_COMPONENT:Loan Service}
+    detail: ${CUSTOMER_EXCEPTION_DETAIL:Error in customer, see errors for details}
+  url: ${CUSTOMER_URL:localhost:8081/customers}
+  get:
+    byCustomerId: ${CUSTOMER_GET_ID:/{id}}

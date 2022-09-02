@@ -1,0 +1,22 @@
+server:
+  port: 9002
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://localhost:9000/eureka}
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/quisange/challenge.git
+          searchPaths: database-config
+        default-label: main
+  security:
+    user:
+      name: ${CONFIG_SERVER_USER:develcorp}
+      password: ${CONFIG_SERVER_PASSWORD:develcorppass}
