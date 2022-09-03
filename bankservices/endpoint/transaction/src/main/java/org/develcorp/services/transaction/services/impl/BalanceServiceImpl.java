@@ -30,9 +30,11 @@ public class BalanceServiceImpl implements BalanceService {
     public BalanceDto saveBalance(BalanceDto balanceDto) {
         Balance balance = balanceMapper.BalanceDtoToBalance(balanceDto);
 
-        if (balanceRepository.findById(balance.getId()) != null) {
+        if (balanceRepository.findById(balance.getId()).orElse(null) != null) {
+            System.out.println("ERROR EN EL ID");
             throw BalanceError.E002;
         } else {
+            System.out.println("ENTRA A GUARDAR");
             return balanceMapper.BalanceToBalanceDto(balanceRepository.save(balance));
         }
     }
