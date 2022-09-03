@@ -11,11 +11,11 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    List<Transaction> findByAccountNumber(Long accountNumber);
+    List<Transaction> findByAccountId(Long accountId);
 
-    List<Transaction> findByAccountNumberAndDateAndTransactionType
-            (Long accountNumber, Date date, TransactionType transactionType);
+    List<Transaction> findByAccountIdAndDateAndTransactionType
+            (Long accountId, Date date, TransactionType transactionType);
 
-    List<Transaction> findByAccountNumberAndDateBetween
-            (Long accountNumber, Date fromDate, Date toDate);
+    List<Transaction> findByAccountIdAndDateBetween
+            (Long accountId, Date fromDate, Date toDate);
 }

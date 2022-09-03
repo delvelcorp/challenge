@@ -112,9 +112,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>quisange/challenge</repository>
-                    <username>quisange</username>
-                    <password>miisD.210</password>
+                    <repository>delvelcorp/challenge</repository>
+                    <username>delvelcorp</username>
+                    <password>Paul037037</password>
                     <tag>${project.artifactId}</tag>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>

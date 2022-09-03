@@ -24,10 +24,10 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping (value = "/{id}")
-    public ResponseEntity<?> findByCustomerId(@PathVariable("id") Long id){
+    public ResponseEntity<?> findById(@PathVariable("id") Long id){
         log.info("findById --> GET: /api/customers/?id");
 
-        CustomerDto customerDto = customerService.byCustomerId(id);
+        CustomerDto customerDto = customerService.findByCustomer(id);
         if (customerDto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message("C001", "Customer with identification " + id + " not found").toString());
         } else {
@@ -36,12 +36,12 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listAllCustomers(@RequestParam(name = "name", required = false) String name){
-        log.info("listAllCustomers --> GET: /api/customers");
+    public ResponseEntity<?> getAllCustomer(@RequestParam(name = "name", required = false) String name){
+        log.info("getAllCustomer --> GET: /api/customers");
 
         List<CustomerDto> customerDtoList;
         if (null == name){
-            customerDtoList = customerService.listAllCustomers();
+            customerDtoList = customerService.getAllCustomers();
         }else {
             customerDtoList = customerService.findByName(name);
         }
@@ -86,7 +86,7 @@ public class CustomerController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteCustomer(@RequestParam(name = "id") Long id) {
-        log.info("deleteCustomer --> GET: /api/customers/delete");
+        log.info("Client delete Endpoint GET: /api/customers/delete");
 
         try {
             customerService.deleteCustomer(id);

@@ -21,21 +21,3 @@ spring:
       retry:
         max-attempts: 1
         max-interval: 1000
-
-account:
-  accountError:
-    title: ${ACCOUNT_EXCEPTION_TITLE:Loan Error}
-    component: ${ACCOUNT_EXCEPTION_COMPONENT:Loan Service}
-    detail: ${ACCOUNT_EXCEPTION_DETAIL:Error in account, see errors for details}
-  url: ${ACCOUNT_URL:http://172.20.0.6:8082/accounts}
-  get:
-    byAccountNumber: ${ACCOUNT_GET_ID:/{id}}
-
-customer:
-  customerError:
-    title: ${CUSTOMER_EXCEPTION_TITLE:Loan Error}
-    component: ${CUSTOMER_EXCEPTION_COMPONENT:Loan Service}
-    detail: ${CUSTOMER_EXCEPTION_DETAIL:Error in customer, see errors for details}
-  url: ${CUSTOMER_URL:http://172.20.0.6:8081/customers}
-  get:
-    byCustomerId: ${CUSTOMER_GET_ID:/{id}}

@@ -1,7 +1,6 @@
 package org.develcorp.services.account.controller;
 
 import org.develcorp.services.account.mockData.AccountMock;
-import org.develcorp.services.account.model.dto.AccountDto;
 import org.develcorp.services.account.services.impl.AccountServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,16 +32,16 @@ public class AccountControllerTest {
 
     @Test
     void whenFindAllThenGetResponseOk(){
-        Mockito.when(accountService.listAllAccounts()).thenReturn((List<AccountDto>) AccountMock.getAccountDto());
+        Mockito.when(accountService.getAllAccounts()).thenReturn(List.of(AccountMock.getAccountDto()));
 
-        Assertions.assertEquals(accountController.listAllAccounts().getStatusCode(), HttpStatus.OK);
+        Assertions.assertEquals(accountController.getAllAccounts().getStatusCode(), HttpStatus.OK);
     }
 
     @Test
     void whenFindByIdThenGetResponseOk(){
-        Mockito.when(accountService.byAccountNumber(Mockito.anyLong())).thenReturn(AccountMock.getAccountDto());
+        Mockito.when(accountService.getByAccountId(Mockito.anyLong())).thenReturn(AccountMock.getAccountDto());
 
-        Assertions.assertEquals(accountController.findByAccountId(id).getStatusCode(), HttpStatus.OK);
+        Assertions.assertEquals(accountController.getByAccountId(id).getStatusCode(), HttpStatus.OK);
     }
 
     @Test

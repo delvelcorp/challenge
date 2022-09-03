@@ -1,12 +1,9 @@
 package org.develcorp.services.transaction.services.impl;
 
-import org.develcorp.services.transaction.external.dto.account.AccountDto;
-import org.develcorp.services.transaction.external.dto.customer.CustomerDto;
-import org.develcorp.services.transaction.external.service.impl.AccountServiceImpl;
-import org.develcorp.services.transaction.external.service.impl.CustomerServiceImpl;
 import org.develcorp.services.transaction.mapper.TransactionMapper;
 import org.develcorp.services.transaction.model.dto.BalanceDto;
 import org.develcorp.services.transaction.model.dto.TransactionDto;
+import org.develcorp.services.transaction.model.entity.Balance;
 import org.develcorp.services.transaction.model.entity.Transaction;
 import org.develcorp.services.transaction.model.enums.TransactionType;
 import org.develcorp.services.transaction.model.error.TransactionError;
@@ -34,12 +31,6 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private TransactionMapper transactionMapper;
 
-    @Autowired
-    private AccountServiceImpl accountService;
-
-    @Autowired
-    private CustomerServiceImpl customerService;
-
     @Value("${dailyDebitLimit}")
     private BigDecimal max;
 
@@ -59,25 +50,28 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    public TransactionDto byTransactionId(Long id) {
+    public TransactionDto getTransaction(Long id) {
         return transactionMapper.TransactionToTransactionDto(transactionRepository.findById(id).orElse(null));
     }
 
     @Override
     @Transactional
-    public TransactionDto postInitialTransaction(TransactionDto transactionDto) {
+    public TransactionDto openTransaction(TransactionDto transactionDto) {
         Transaction transaction = transactionMapper.TransactionDtoToTransaction(transactionDto);
-        BalanceDto balanceDto;
+        System.out.println("CUENTA ------------ " +  transaction.getAccountId());;
 
-        balanceDto = new BalanceDto();
-        balanceDto.setAccountNumber(transaction.getAccountNumber());
-        balanceDto.setInitialBalance(transaction.getValue());
-        balanceDto.setDate(new Timestamp(new Date().getTime()));
+        System.out.println("INGRESA A GUARDAR");
+        BalanceDto balanceDto = new BalanceDto();
+        balanceDto.setAccountId(transaction.getAccountId());
+        balanceDto.setActualBalance(transaction.getValue());
+        balanceDto.setModifiedAt(new Timestamp(new Date().getTime()));
+        System.out.println("GUARDA BALANCE");
         balanceService.saveBalance(balanceDto);
 
-        transaction.setBalance(balanceDto.getInitialBalance());
+        transaction.setBalance(balanceDto.getActualBalance());
         transaction.setStatus(true);
         transaction.setMessage("Opening of " + transaction.getValue());
+        System.out.println("GUARDA TRANSACCION");
         return transactionMapper.TransactionToTransactionDto(this.transactionRepository.save(transaction));
         }
 
@@ -85,32 +79,21 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public TransactionDto saveTransaction(TransactionDto transactionDto) {
         Transaction transaction = transactionMapper.TransactionDtoToTransaction(transactionDto);
-        BalanceDto balanceDto = balanceService.findByAccountNumber(transaction.getAccountNumber());
-
-        AccountDto accountDto =  accountService.getAccountNumber(transaction.getAccountNumber());
-        CustomerDto customerDto =  customerService.getCustomerId(accountDto.getCustomerId());
-
+        BalanceDto balanceDto = balanceService.findByAccountId(transaction.getAccountId());
 
         if (balanceDto == null){
             return null;
         }else{
             switch (transaction.getTransactionType()) {
                 case DEPOSIT:
-                    balanceDto.setCustomer(customerDto.getName());
-                    balanceDto.setDate(new Date());
-                    balanceDto.setAccountNumber(accountDto.getAccountNumber());
-                    balanceDto.setAccountType(accountDto.getAccountType().getCode());
-                    balanceDto.setInitialBalance(balanceDto.getInitialBalance());
-                    balanceDto.setStatus(true);
-                    balanceDto.setValue(transaction.getValue());
-                    balanceDto.setBalance(balanceDto.getInitialBalance().add(transaction.getValue()));
+                    balanceDto.setActualBalance(balanceDto.getActualBalance().add(transaction.getValue()));
 
-                    transaction.setBalance(balanceDto.getInitialBalance());
+                    transaction.setBalance(balanceDto.getActualBalance());
                     transaction.setStatus(true);
                     transaction.setMessage("Deposit of " + transaction.getValue());
                     break;
                 case WITHDRAWAL:
-                    List<TransactionDto> transactions = findByAccountNumberAndDateAndTransactionType(transaction.getAccountNumber(), new Date(), TransactionType.WITHDRAWAL);
+                    List<TransactionDto> transactions = findByAccountIdAndDateAndTransactionType(transaction.getAccountId(), new Date(), TransactionType.WITHDRAWAL);
 
                     BigDecimal total = new BigDecimal(0);
 
@@ -121,18 +104,18 @@ public class TransactionServiceImpl implements TransactionService {
                     }
 
                     if (total.add(transaction.getValue()).compareTo(max) > 0) {
-                        transaction.setBalance(balanceDto.getBalance());
+                        transaction.setBalance(balanceDto.getActualBalance());
                         transaction.setStatus(false);
                         transaction.setMessage("Max mont limit " + max + ".");
                     } else {
-                        if (balanceDto.getBalance().compareTo(transaction.getValue()) < 0) {
-                            transaction.setBalance(balanceDto.getBalance());
+                        if (balanceDto.getActualBalance().compareTo(transaction.getValue()) < 0) {
+                            transaction.setBalance(balanceDto.getActualBalance());
                             transaction.setStatus(false);
                             transaction.setMessage("Balance insufficient");
                         } else {
-                            balanceDto.setBalance(balanceDto.getBalance().subtract(transaction.getValue()));
+                            balanceDto.setActualBalance(balanceDto.getActualBalance().subtract(transaction.getValue()));
 
-                            transaction.setBalance(balanceDto.getBalance());
+                            transaction.setBalance(balanceDto.getActualBalance());
                             transaction.setStatus(true);
                             transaction.setMessage("Remove of " + transaction.getValue());
                         }
@@ -152,7 +135,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction = transactionRepository.findById(transaction.getId()).orElse(null);
 
         if (transaction != null) {
-            transaction.setAccountNumber(transactionDto.getAccountNumber());
+            transaction.setAccountId(transactionDto.getAccountId());
             transaction.setTransactionType(transactionDto.getTransactionType());
             transaction.setBalance(transactionDto.getBalance());
             transaction.setMessage(transactionDto.getMessage());
@@ -184,8 +167,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TransactionDto> findByAccountNumber(Long accountNumber) {
-        List<Transaction> transactions = transactionRepository.findByAccountNumber(accountNumber);
+    public List<TransactionDto> findByAccountId(Long accountId) {
+        List<Transaction> transactions = transactionRepository.findByAccountId(accountId);
         List<TransactionDto> transactionDtoList = new ArrayList<>();
 
         for (Transaction transaction : transactions) {
@@ -198,8 +181,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    public TransactionDto findByAccountNumberLast(Long accountNumber) {
-        List<Transaction> transactions = transactionRepository.findByAccountNumber(accountNumber);
+    public TransactionDto findByAccountIdLast(Long accountId) {
+        List<Transaction> transactions = transactionRepository.findByAccountId(accountId);
         List<TransactionDto> transactionDtoList = new ArrayList<>();
 
         for (Transaction transaction : transactions) {
@@ -208,9 +191,9 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         Comparator<Transaction> compareById =
-                Comparator.comparing(Transaction::getId);
+                (Transaction o1, Transaction o2) -> o1.getId().compareTo( o2.getId() );
 
-        transactions.sort(compareById);
+        Collections.sort(transactions, compareById);
 
         if (transactions.isEmpty()){
             return null;
@@ -221,8 +204,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TransactionDto> findByAccountNumberAndDateAndTransactionType(Long accountNumber, Date date, TransactionType transactionType) {
-        List<Transaction> transactions = transactionRepository.findByAccountNumberAndDateAndTransactionType(accountNumber, date, transactionType);
+    public List<TransactionDto> findByAccountIdAndDateAndTransactionType(Long accountId, Date date, TransactionType transactionType) {
+        List<Transaction> transactions = transactionRepository.findByAccountIdAndDateAndTransactionType(accountId, date, transactionType);
         List<TransactionDto> transactionDtoList = new ArrayList<>();
 
         for (Transaction transaction : transactions) {
@@ -235,8 +218,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TransactionDto> findByAccountNumberAndDateBetween(Long accountNumber, Date fromDate, Date toDate) {
-        List<Transaction> transactions = transactionRepository.findByAccountNumberAndDateBetween(accountNumber, fromDate, toDate);
+    public List<TransactionDto> findByAccountIdAndDateBetween(Long accountId, Date fromDate, Date toDate) {
+        List<Transaction> transactions = transactionRepository.findByAccountIdAndDateBetween(accountId, fromDate, toDate);
         List<TransactionDto> transactionDtoList = new ArrayList<>();
 
         for (Transaction transaction : transactions) {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-02T11:47:10-0500",
+    date = "2022-09-02T17:03:43-0500",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 11.0.15 (Oracle Corporation)"
 )
 @Component
@@ -30,7 +30,7 @@ public class TransactionMapperImpl implements TransactionMapper {
             transaction.setStatus( transactionDto.getStatus() );
         }
         transaction.setMessage( transactionDto.getMessage() );
-        transaction.setAccountNumber( transactionDto.getAccountNumber() );
+        transaction.setAccountId( transactionDto.getAccountId() );
 
         return transaction;
     }
@@ -50,7 +50,7 @@ public class TransactionMapperImpl implements TransactionMapper {
         transactionDto.setBalance( transaction.getBalance() );
         transactionDto.setStatus( transaction.isStatus() );
         transactionDto.setMessage( transaction.getMessage() );
-        transactionDto.setAccountNumber( transaction.getAccountNumber() );
+        transactionDto.setAccountId( transaction.getAccountId() );
 
         return transactionDto;
     }

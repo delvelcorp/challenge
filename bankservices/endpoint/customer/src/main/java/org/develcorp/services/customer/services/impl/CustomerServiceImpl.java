@@ -58,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
                     .defaultUriVariables(Collections.singletonMap("url", "http://endpoint-account"))
                     .build();
             List<Object> block = client.method(HttpMethod.GET).uri(uriBuilder -> uriBuilder
-                            .path("/cuentas")
+                            .path("/accounts")
                             .queryParam("customerId", customerId)
                             .build())
                     .retrieve().bodyToFlux(Object.class).collectList().block();
@@ -71,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CustomerDto> listAllCustomers() {
+    public List<CustomerDto> getAllCustomers() {
         List<Customer> customers = customerRepository.findAll();
         List<CustomerDto> customerDtos = new ArrayList<>();
 
@@ -85,7 +85,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional(readOnly = true)
-    public CustomerDto byCustomerId(Long id) {
+    public CustomerDto findByCustomer(Long id) {
         CustomerDto customerDto = customerMapper.CustomerToCustomerDto(customerRepository.findById(id).orElse(null));
         if(customerDto == null){
             return null;
@@ -132,7 +132,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @Transactional
     public CustomerDto deleteCustomer(Long id) {
         Customer customer = customerRepository.findById(id).orElse(null);
 
@@ -149,7 +148,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<CustomerDto> findByName(String name) {
         List<Customer> customers = customerRepository.findByName(name);
         List<CustomerDto> customerDtoList = new ArrayList<>();
@@ -160,5 +158,16 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         return customerDtoList;
+    }
+
+    @Override
+    public CustomerDto findByIdentification(String identification) {
+        CustomerDto customerDto = customerMapper.CustomerToCustomerDto(customerRepository.findByIdentification(identification));
+        if(customerDto == null){
+            return null;
+        }
+
+        customerDto.setAccounts(getAccounts(customerDto.getId()));
+        return customerDto;
     }
 }

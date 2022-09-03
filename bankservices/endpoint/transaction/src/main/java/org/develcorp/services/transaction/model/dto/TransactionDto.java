@@ -23,15 +23,17 @@ public class TransactionDto {
     @NotNull(message = "Transaction type is required.")
     private TransactionType transactionType;
 
-    @NotNull(message = "Value is required.")
+    @NotNull(message = "Identification is required.")
     private BigDecimal value;
 
+    @NotNull (message = "Address is required.")
     private BigDecimal balance;
 
+    @NotNull (message = "Phone is required.")
     private Boolean status;
 
     private String message;
 
     @NotNull (message = "Account is required.")
-    private Long accountNumber;
+    private Long accountId;
 }

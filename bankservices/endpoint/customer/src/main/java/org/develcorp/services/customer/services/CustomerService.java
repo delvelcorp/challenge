@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CustomerService {
 
-    List<CustomerDto> listAllCustomers();
+    List<CustomerDto> getAllCustomers();
 
-    CustomerDto byCustomerId(Long id);
+    CustomerDto findByCustomer(Long id);
 
     CustomerDto saveCustomer(CustomerDto customerDto);
 
@@ -17,4 +17,6 @@ public interface CustomerService {
     CustomerDto deleteCustomer(Long id);
 
     List<CustomerDto> findByName(String name);
+
+    CustomerDto findByIdentification(String identification);
 }

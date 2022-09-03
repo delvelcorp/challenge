@@ -1,35 +1,35 @@
 # Challange Backend Spring Boot Microservicios
 
-Proyecto con una arquitectura de microservicios, para la gestión de movimiento en cuentas bancarias, con el manejo de clientes, cuentas y transacciones.
+Proyecto con una arquitectura de microservicios, para la gesti贸n de movimiento en cuentas bancarias, con el manejo de clientes, cuentas y transacciones.
 
 
-## Instrucciones 🚀
+## Instrucciones 馃殌
 
-_Este proyecto esta desarrollado en Spring Boot sobre PostgreSQL como base de datos, cuenta con eureka para la comunicación directa entre las apis y docker para la creación y ejecución de los contenedores.
+_Este proyecto esta desarrollado en Spring Boot sobre PostgreSQL como base de datos, cuenta con eureka para la comunicaci贸n directa entre las apis y docker para la creaci贸n y ejecuci贸n de los contenedores.
 
-_Gracias a ello usted podrá seguir las instrucciones ahora detalladas y obtener una copia del proyecto en su equipo y posterior a ello ejecutarlo localmente.
+_Gracias a ello usted podr谩 seguir las instrucciones ahora detalladas y obtener una copia del proyecto en su equipo y posterior a ello ejecutarlo localmente.
 
-- Desde la raíz de este repositorio ubicado en la rama principal, realice la clonación del proyecto a una rama en una ruta local de su equipo.
+- Desde la ra铆z de este repositorio ubicado en la rama principal, realice la clonaci贸n del proyecto a una rama en una ruta local de su equipo.
 **git clone rutaEspecificaGit**
 
-- Desde su equipo local, puede verificar tres rutas de este proyecto, detalladas a continuación:
+- Desde su equipo local, puede verificar tres rutas de este proyecto, detalladas a continuaci贸n:
     bankservices\endpoint -> Contiene los 3 endpoints necesarios para los servicios requeridos
 	bankservices\infrastructure -> Contiene los dos servidores necesarios para levantar la arquitectura propuesta
-	bankservices\database-config -> Contiene las configuraciones necesarias para la conexión hacia la base de datos
+	bankservices\database-config -> Contiene las configuraciones necesarias para la conexi贸n hacia la base de datos
 
 
-### Requisitos 📋
+### Requisitos 馃搵
 
-_La instalación y ejecución de este proyecto al estar basada en contenedores es bastante sencilla_
+_La instalaci贸n y ejecuci贸n de este proyecto al estar basada en contenedores es bastante sencilla_
 
 - Necesita contar con un equipo windows.
 - Tener instalado java 8 o superior.
-- Tener instalado maven para la compilación de las imágenes.
+- Tener instalado maven para la compilaci贸n de las im谩genes.
 - Tener instalado docker para el manejo de los contenedores.
 Contar con un equipo que tenga un sistema operativo Linux
 
 
-### Ejecución 🔧
+### Ejecuci贸n 馃敡
 
 _Siga los pasos propuestos a fin de tener el proyecto corriendo en su equipo:
 
@@ -43,11 +43,11 @@ Valide en su equipo que disponga de cinco imagenes creadas respectivas a lo real
 **docker images**
 
 
-## Despliegue 📦
+## Despliegue 馃摝
 
-_Para el despliegue del proyecto utilizaremos docker compose, ya que este nos permité definir y levantar varios contenedores al tiempo.
+_Para el despliegue del proyecto utilizaremos docker compose, ya que este nos permit茅 definir y levantar varios contenedores al tiempo.
 
-- Nos ubicamos en la carpeta raíz del proyecto "bankservices", y ejecutamos el siguiente comando:
+- Nos ubicamos en la carpeta ra铆z del proyecto "bankservices", y ejecutamos el siguiente comando:
 **docker-compose up -d**
 ```
 Starting id-eureka ... done
@@ -62,36 +62,36 @@ Despues de unos 20 segundos del despliegue podemos ver que servicios se han leva
 **docker ps**
 ```
 CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS          PORTS                    NAMES
-b543989bd244   delvelcorp/challenge:config-server   "sh -c 'java $JAVA_O�?   40 hours ago     Up 12 minutes   0.0.0.0:9002->9002/tcp   config_container
-3e8d779d15a3   delvelcorp/challenge:eureka-server   "sh -c 'java $JAVA_O�?   41 hours ago     Up 12 minutes   0.0.0.0:9000->9000/tcp   discovery-eureka
-265cdaa7a9a2   postgres:latest                    "docker-entrypoint.s�?   41 hours ago     Up 12 minutes   0.0.0.0:3432->5432/tcp   postgres_container
+b543989bd244   delvelcorp/challenge:config-server   "sh -c 'java $JAVA_O鈥?   40 hours ago     Up 12 minutes   0.0.0.0:9002->9002/tcp   config_container
+3e8d779d15a3   delvelcorp/challenge:eureka-server   "sh -c 'java $JAVA_O鈥?   41 hours ago     Up 12 minutes   0.0.0.0:9000->9000/tcp   discovery-eureka
+265cdaa7a9a2   postgres:latest                    "docker-entrypoint.s鈥?   41 hours ago     Up 12 minutes   0.0.0.0:3432->5432/tcp   postgres_container
 ```
 
-_Como se puede observar faltan los servicios correspondientes a los endpoint, para visualizar que ocurrió, utilizamos el log de docker
+_Como se puede observar faltan los servicios correspondientes a los endpoint, para visualizar que ocurri贸, utilizamos el log de docker
 **docker logs -f customer_container**
 ```
 org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://discovery-eureka:9000/eureka/apps/": 
 Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
 ```
 
-- De acuerdo a la salida de dicho comando vemos que hay una conexión rechazada por el servidor de Eureka, esto debido a que necesitan que Eureka este levantado totalmente para poder ejecutarse.
+- De acuerdo a la salida de dicho comando vemos que hay una conexi贸n rechazada por el servidor de Eureka, esto debido a que necesitan que Eureka este levantado totalmente para poder ejecutarse.
 
 - Por ello solicitamos nuevamente el inicio de los contenedores a fin de levantar los restantes.
 **docker-compose start**
 ```
 CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS          PORTS                    NAMES
-2e31678406b8   delvelcorp/challenge:account         "sh -c 'java $JAVA_O�?   12 minutes ago   Up 8 minutes    0.0.0.0:8082->8082/tcp   account_container
-e54814f84fb0   delvelcorp/challenge:customer        "sh -c 'java $JAVA_O�?   12 minutes ago   Up 8 minutes    0.0.0.0:8081->8081/tcp   customer_container
-364d94591508   delvelcorp/challenge:transaction     "sh -c 'java $JAVA_O�?   12 minutes ago   Up 8 minutes    0.0.0.0:8083->8083/tcp   transaction_container
-b543989bd244   delvelcorp/challenge:config-server   "sh -c 'java $JAVA_O�?   40 hours ago     Up 12 minutes   0.0.0.0:9002->9002/tcp   config_container
-3e8d779d15a3   delvelcorp/challenge:eureka-server   "sh -c 'java $JAVA_O�?   41 hours ago     Up 12 minutes   0.0.0.0:9000->9000/tcp   discovery-eureka
-265cdaa7a9a2   postgres:latest                    "docker-entrypoint.s�?   41 hours ago     Up 12 minutes   0.0.0.0:3432->5432/tcp   postgres_container
+2e31678406b8   delvelcorp/challenge:account         "sh -c 'java $JAVA_O鈥?   12 minutes ago   Up 8 minutes    0.0.0.0:8082->8082/tcp   account_container
+e54814f84fb0   delvelcorp/challenge:customer        "sh -c 'java $JAVA_O鈥?   12 minutes ago   Up 8 minutes    0.0.0.0:8081->8081/tcp   customer_container
+364d94591508   delvelcorp/challenge:transaction     "sh -c 'java $JAVA_O鈥?   12 minutes ago   Up 8 minutes    0.0.0.0:8083->8083/tcp   transaction_container
+b543989bd244   delvelcorp/challenge:config-server   "sh -c 'java $JAVA_O鈥?   40 hours ago     Up 12 minutes   0.0.0.0:9002->9002/tcp   config_container
+3e8d779d15a3   delvelcorp/challenge:eureka-server   "sh -c 'java $JAVA_O鈥?   41 hours ago     Up 12 minutes   0.0.0.0:9000->9000/tcp   discovery-eureka
+265cdaa7a9a2   postgres:latest                    "docker-entrypoint.s鈥?   41 hours ago     Up 12 minutes   0.0.0.0:3432->5432/tcp   postgres_container
 ```
 
 - Como se puede observar tenemos todos los servicios levantados y corriendo
 
 
-## Pruebas ⚙️
+## Pruebas 鈿欙笍
 
 _Validar el funcionamiento de los microservicios de negocio a traves de Postman
 
@@ -283,11 +283,11 @@ localhost:8082/accounts/report?customer=2&from=2022-09-02&to=2022-09-02
 ]
 ```
 
-## Versionado 📌
+## Versionado 馃搶
 * [Git](https://git-scm.com/). 
 
 
-## Construcción 🛠�?
+## Construcci贸n 馃洜锔?
 
 * [Spring](https://spring.io/)
 * [Maven](https://maven.apache.org/)
@@ -296,6 +296,6 @@ localhost:8082/accounts/report?customer=2&from=2022-09-02&to=2022-09-02
 * [Postman](https://www.postman.com/)
 
 
-## Autores ✒️
+## Autores 鉁掞笍
 
-* **Paúl Vidal** - *Desarrollo completo* - [pvidalm](https://github.com/pvidalm/)
+* **Pa煤l Vidal** - *Desarrollo completo* - [pvidalm](https://github.com/pvidalm/)

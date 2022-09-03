@@ -10,9 +10,9 @@ public interface TransactionService {
 
     List<TransactionDto> listAllTransactions();
 
-    TransactionDto byTransactionId(Long id);
+    TransactionDto getTransaction(Long id);
 
-    TransactionDto postInitialTransaction(TransactionDto transactionDto);
+    TransactionDto openTransaction(TransactionDto transactionDto);
 
     TransactionDto saveTransaction(TransactionDto transactionDto);
 
@@ -20,11 +20,11 @@ public interface TransactionService {
 
     TransactionDto deleteTransaction(Long id);
 
-    List<TransactionDto> findByAccountNumber(Long accountNumber);
+    List<TransactionDto> findByAccountId(Long accountId);
 
-    TransactionDto findByAccountNumberLast(Long accountNumber);
+    TransactionDto findByAccountIdLast(Long accountId);
 
-    List<TransactionDto> findByAccountNumberAndDateAndTransactionType(Long accountNumber, Date date, TransactionType transactionType);
+    List<TransactionDto> findByAccountIdAndDateAndTransactionType(Long accountId, Date date, TransactionType transactionType);
 
-    List<TransactionDto> findByAccountNumberAndDateBetween(Long accountNumber, Date fromDate, Date toDate);
+    List<TransactionDto> findByAccountIdAndDateBetween(Long accountId, Date fromDate, Date toDate);
 }

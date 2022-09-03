@@ -1,5 +1,4 @@
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\controller\CustomerController.java
-C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\error\RestTemplateException.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\repository\CustomerRepository.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\services\impl\CustomerServiceImpl.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\config\WebClientConfig.java
@@ -11,13 +10,9 @@ C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservi
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\error\Message.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\mapper\CustomerMapper.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\model\entity\Customer.java
-C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\config\CustomerProperties.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\repository\PersonRepository.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\services\CustomerService.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\model\entity\Person.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\model\error\CustomerError.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\error\BindingError.java
 C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\error\ExceptionError.java
-C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\config\ApplicationConfiguration.java
-C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\error\RestTemplateExceptionHandler.java
-C:\Users\BlancaAngelicaPinosF\Documentos\Linux\Projects\Microservicios\bankservices\endpoint\customer\src\main\java\org\develcorp\services\customer\config\AccountProperties.java

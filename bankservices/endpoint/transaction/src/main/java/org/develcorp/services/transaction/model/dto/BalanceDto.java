@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.develcorp.services.transaction.model.enums.TransactionType;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,19 +17,12 @@ public class BalanceDto {
 
     private Long id;
 
-    private String customer;
+    @NotNull (message = "Account is required.")
+    private Long accountId;
 
-    private Date date;
+    @NotNull (message = "Value is required.")
+    private BigDecimal actualBalance;
 
-    private Long accountNumber;
-
-    private String accountType;
-
-    private BigDecimal initialBalance;
-
-    private boolean status;
-
-    private BigDecimal value;
-
-    private BigDecimal balance;
+    @NotNull(message = "Date is required.")
+    private Date modifiedAt;
 }

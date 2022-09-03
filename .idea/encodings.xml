@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/bankservices/endpoint/account/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/endpoint/account/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/endpoint/customer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/endpoint/customer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/endpoint/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/endpoint/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/endpoint/transaction/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/endpoint/transaction/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/infrastructure/eureka-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/infrastructure/eureka-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/infrastructure/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/infrastructure/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bankservices/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
