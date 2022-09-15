@@ -1,0 +1,824 @@
+{
+	"info": {
+		"_postman_id": "5e5378cc-f5e8-4d17-9e71-059e85b7f90e",
+		"name": "tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5270670"
+	},
+	"item": [
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/customers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jose Lema\",\r\n    \"gender\": \"MAN\",\r\n    \"age\": 31,\r\n    \"identification\": \"1111111111\",\r\n    \"address\": \"Otavalo sn y principal\",\r\n    \"phone\": \"098254785\",\r\n    \"password\": \"1234 \",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Marianela Montalvo \",\r\n    \"gender\": \"WOMAN\",\r\n    \"age\": 22,\r\n    \"identification\": \"2222222222\",\r\n    \"address\": \"Amazonas y  NNUU\",\r\n    \"phone\": \"097548965\",\r\n    \"password\": \"5678\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Juan Osorio\",\r\n    \"gender\": \"MAN\",\r\n    \"age\": 43,\r\n    \"identification\": \"3333333333\",\r\n    \"address\": \"13 junio y Equinoccial\",\r\n    \"phone\": \"098874587\",\r\n    \"password\": \"1245\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Juan Osorio\",\r\n    \"gender\": \"MAN\",\r\n    \"age\": 43,\r\n    \"identification\": \"3333333333\",\r\n    \"address\": \"13 junio y Equinoccial\",\r\n    \"phone\": \"098874587\",\r\n    \"password\": \"1245\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 8,\r\n    \"name\": \"Jose Lemadsf\",\r\n    \"gender\": \"MAN\",\r\n    \"age\": 31,\r\n    \"identification\": \"1111111111\",\r\n    \"address\": \"Otavalo sn y principal\",\r\n    \"phone\": \"098254785\",\r\n    \"password\": \"1234\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/delete?id=8",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "accounts",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/accounts/585545",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts",
+								"585545"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": 478758,\r\n    \"accountType\": \"S\",\r\n    \"initialBalance\": 2000,\r\n    \"status\": true,\r\n    \"customerId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/accounts/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": 225487,\r\n    \"accountType\": \"C\",\r\n    \"initialBalance\": 100,\r\n    \"status\": true,\r\n    \"customerId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/accounts/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": 495878,\r\n    \"accountType\": \"S\",\r\n    \"initialBalance\": 10,\r\n    \"status\": true,\r\n    \"customerId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/accounts/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": 496825,\r\n    \"accountType\": \"S\",\r\n    \"initialBalance\": 540,\r\n    \"status\": true,\r\n    \"customerId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/accounts/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": 11,\r\n    \"accountType\": \"C\",\r\n    \"initialBalance\": 1000,\r\n    \"status\": true,\r\n    \"customerId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/accounts/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": 1,\r\n    \"accountType\": \"C\",\r\n    \"initialBalance\": 100,\r\n    \"status\": true,\r\n    \"transactions\": null,\r\n    \"customerId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/accounts/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/accounts/delete/?id=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts",
+								"delete",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/accounts",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/accounts/report?customer=2&from=2022-09-02&to=2022-09-02",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"accounts",
+								"report"
+							],
+							"query": [
+								{
+									"key": "customer",
+									"value": "2"
+								},
+								{
+									"key": "from",
+									"value": "2022-09-02"
+								},
+								{
+									"key": "to",
+									"value": "2022-09-02"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transactions",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/transactions/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"transactions",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2022-09-02\",\r\n    \"transactionType\": \"WITHDRAWAL\",\r\n    \"value\": 575,\r\n    \"balance\": 0,\r\n    \"accountNumber\": 478758,\r\n    \"message\": \"\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/transactions/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"transactions",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2022-09-02\",\r\n    \"transactionType\": \"DEPOSIT\",\r\n    \"value\": 100,\r\n    \"balance\": 0,\r\n    \"accountNumber\": 225487,\r\n    \"message\": \"\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/transactions/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"transactions",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"id\": 2,\r\n        \"name\": \"namdsdr\",\r\n        \"gender\": \"MAN\",\r\n        \"age\": 11,\r\n        \"identification\": \"2222222222\",\r\n        \"address\": \"add\",\r\n        \"phone\": \"111111111\",\r\n        \"password\": \"1111\",\r\n        \"status\": true,\r\n        \"accounts\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/delete?id=2",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/transactions",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/transactions/report?cliente=478758&desde=2022-09-02&hasta=2022-09-02",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"transactions",
+								"report"
+							],
+							"query": [
+								{
+									"key": "cliente",
+									"value": "478758"
+								},
+								{
+									"key": "desde",
+									"value": "2022-09-02"
+								},
+								{
+									"key": "hasta",
+									"value": "2022-09-02"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"namr\",\r\n        \"gender\": \"MAN\",\r\n        \"age\": 11,\r\n        \"identification\": \"2222222222\",\r\n        \"address\": \"add\",\r\n        \"phone\": \"111111111\",\r\n        \"password\": \"1111\",\r\n        \"status\": true,\r\n        \"accounts\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2022-09-02\",\r\n    \"transactionType\": \"DEPOSIT\",\r\n    \"value\": 100,\r\n    \"balance\": 0,\r\n    \"accountId\": 225487,\r\n    \"message\": \"\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/transactions/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"transactions",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2022-09-02\",\r\n    \"transactionType\": \"DEPOSIT\",\r\n    \"value\": 150,\r\n    \"balance\": 0,\r\n    \"accountId\": 495878,\r\n    \"message\": \"\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/transactions/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"transactions",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2022-09-02\",\r\n    \"transactionType\": \"WITHDRAWAL\",\r\n    \"value\": 540,\r\n    \"balance\": 0,\r\n    \"accountId\": 496825,\r\n    \"message\": \"\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/transactions/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"transactions",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
